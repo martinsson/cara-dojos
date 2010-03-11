@@ -23,8 +23,8 @@ a player can take a field if not already taken
 players take turns taking fields until the game is over
  */
 	@Test public void gameIsOverWhenAllFieldsAreTaken() throws Exception {
-		List<Integer> fieldsTakenByWhite = asList(new Integer[] {1, 2, 5, 6, 7});
-		List<Integer> fieldsTakenByBlack = asList(new Integer[] {3, 4, 8, 9});
+		List<Integer> fieldsTakenByWhite = list(1, 2, 5, 6, 7);
+		List<Integer> fieldsTakenByBlack = list(3, 4, 8, 9);
 		boolean gameIsOver = game.gameIsOver(fieldsTakenByWhite,
 				fieldsTakenByBlack);
 		assertTrue("game should have been over when all fields are taken", gameIsOver);
@@ -32,8 +32,8 @@ players take turns taking fields until the game is over
 
 	@Test
 	public void gameIsOverWhenEitherOnePlayerHasWonOrAllFieldsAreTaken() throws Exception {
-		List<Integer> fieldsTakenByWhite = asList(new Integer[] {1, 2, 5, 6, 7});
-		List<Integer> fieldsTakenByBlack = asList(new Integer[] {3, 4, 8, 9});
+		List<Integer> fieldsTakenByWhite = list(1, 2, 5, 6, 7);
+		List<Integer> fieldsTakenByBlack = list(3, 4, 8, 9);
 		assertFalse("white has no row column or diagonal", onePlayerHasWon(fieldsTakenByWhite));
 		assertFalse("black has no row column or diagonal", onePlayerHasWon(fieldsTakenByBlack));
 		
@@ -104,7 +104,6 @@ players take turns taking fields until the game is over
 		for (Integer field : fields) {
 			ret.add(field);
 		}
-		
 		return ret;
 	}
 
