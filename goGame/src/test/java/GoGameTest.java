@@ -81,16 +81,17 @@ public class GoGameTest {
 		public Field(String field) {
 			row = field.substring(0, 1);
 			column = field.substring(1);
-    }
-	private List<String> neighboringFields() {
-		
-		int rowAbove = Integer.valueOf(row) - 1;
-		int rowBelow = Integer.valueOf(row) + 1;
-		int columnLeft = Integer.valueOf(column) - 1;
-		int columnRight = Integer.valueOf(column) + 1;
+		}
 
-		return asList(rowAbove+column, row+columnRight, rowBelow+column, row+columnLeft);
-  }
+		private List<String> neighboringFields() {
+
+			int rowAbove = Integer.valueOf(row) - 1;
+			int rowBelow = Integer.valueOf(row) + 1;
+			int columnLeft = Integer.valueOf(column) - 1;
+			int columnRight = Integer.valueOf(column) + 1;
+
+			return asList(rowAbove + column, row + columnRight, rowBelow + column, row + columnLeft);
+		}
 	}
 
 	@Test
