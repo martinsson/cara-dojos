@@ -49,6 +49,14 @@ public class GoGameTest {
 		assertThat(totalLiberties, equalTo(8));
 	}
 	
+	/*
+	 * 11 12 13 21 22 23 31 32 33
+	 */
+	@Test
+	public void neighboringFieldsReturnsTheFourSurroundingFields() throws Exception {
+		assertThat(neighboringFields("22"), equalTo(asList("12", "23", "32", "21")));
+	}
+
 	private int libertiesFor(List<String> fieldsTaken) {
 		return neighboringFields(fieldsTaken).size();
 	}
@@ -61,15 +69,7 @@ public class GoGameTest {
 		corners.removeAll(fieldsTaken);
 		return corners;
 	}
-
-	/*
-	 * 11 12 13 21 22 23 31 32 33
-	 */
-	@Test
-	public void neighboringFieldsReturnsTheFourSurroundingFields() throws Exception {
-		assertThat(neighboringFields("22"), equalTo(asList("12", "23", "32", "21")));
-	}
-
+	
 	private List<String> neighboringFields(String field) {
 		String row = field.substring(0, 1);
 		String column = field.substring(1);
