@@ -37,14 +37,14 @@ public class GoGameTest {
 	}
 
 	@Test
-	public void theNumberLibertiesOfAGroupOfTwoIsTheSumOfAllStonesLiberties() {
+	public void theNumberLibertiesOfAGroupOfTwoIsTheNumberOfFieldsSurrounding() {
 		List<String> fieldsTaken = asList("22", "32");
 		int totalLiberties = stones.libertiesFor(fieldsTaken);
 		assertThat(totalLiberties, equalTo(6));
 	}
 
 	@Test
-	public void theNumberLibertiesOfAGroupOfThreeIsTheSumOfAllStonesLiberties() {
+	public void theNumberLibertiesOfAGroupOfThreeAlignedStones() {
 		List<String> fieldsTaken = asList("22", "32", "42");
 		int totalLiberties = stones.libertiesFor(fieldsTaken);
 		assertThat(totalLiberties, equalTo(8));
