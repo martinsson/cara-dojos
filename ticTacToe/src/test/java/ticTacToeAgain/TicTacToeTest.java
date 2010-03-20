@@ -28,8 +28,21 @@ public class TicTacToeTest {
 	@Test
 	public void gameIsOverWhenAColumnIsTakenByAPlayer() throws Exception {
 		List<Integer> fieldsTakenByPlayer = asList(1, 4, 7);
-		List<Integer> firstColumn = asList(1, 4, 7);
-		Boolean gameIsOver = (fieldsTakenByPlayer.equals(firstColumn));
+		Boolean gameIsOver = gameIsOver(fieldsTakenByPlayer);
 		assertThat("A column is taken, game is over", gameIsOver, is(true));
 	}
+
+	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
+	  Boolean gameIsOver = gameIsOver(aColumnIsTaken(fieldsTakenByPlayer));
+	  return gameIsOver;
+  }
+
+	private Boolean gameIsOver(boolean aColumnIsTaken) {
+	  return aColumnIsTaken;
+  }
+
+	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
+	  List<Integer> firstColumn = asList(1, 4, 7);
+		return fieldsTakenByPlayer.equals(firstColumn);
+  }
 }
