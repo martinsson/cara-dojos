@@ -71,13 +71,18 @@ public class GoGameTest {
 	}
 	
 	private List<String> neighboringFieldz(String field) {
-		return new Field().neighboringFields(field);
+		return new Field(field).neighboringFields();
 	}
 
 	class Field {
-	private List<String> neighboringFields(String field) {
-	  String row = field.substring(0, 1);
-		String column = field.substring(1);
+		private final String row;
+		private final String column;
+
+		public Field(String field) {
+			row = field.substring(0, 1);
+			column = field.substring(1);
+    }
+	private List<String> neighboringFields() {
 		
 		int rowAbove = Integer.valueOf(row) - 1;
 		int rowBelow = Integer.valueOf(row) + 1;
