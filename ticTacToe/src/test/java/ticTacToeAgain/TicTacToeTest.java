@@ -1,6 +1,7 @@
 package ticTacToeAgain;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -32,9 +33,20 @@ public class TicTacToeTest {
 		assertThat("A column is taken, game is over", gameIsOver, is(true));
 	}
 
+	@Test
+  public void gameIsOverWhenSecondColumnIsTaken() throws Exception {
+	  List<Integer> fieldsTakenByPlayer = asList(2, 5, 8);
+	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
+  }
+	
+	@Test
+  public void gameIsOverWhenThirdColumnIsTaken() throws Exception {
+	  List<Integer> fieldsTakenByPlayer = asList(3, 6, 9);
+	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
+  }
+
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-	  Boolean gameIsOver = gameIsOver(aColumnIsTaken(fieldsTakenByPlayer));
-	  return gameIsOver;
+	  return gameIsOver(aColumnIsTaken(fieldsTakenByPlayer));
   }
 
 	private Boolean gameIsOver(boolean aColumnIsTaken) {
@@ -43,6 +55,8 @@ public class TicTacToeTest {
 
 	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
 	  List<Integer> firstColumn = asList(1, 4, 7);
-		return fieldsTakenByPlayer.equals(firstColumn);
+	  List<Integer> secondColumn = asList(2, 5, 8);
+	  List<Integer> thirdColumn = asList(3, 6, 9);
+		return fieldsTakenByPlayer.equals(firstColumn) || fieldsTakenByPlayer.equals(secondColumn) || fieldsTakenByPlayer.equals(thirdColumn);
   }
 }
