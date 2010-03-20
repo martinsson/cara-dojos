@@ -78,13 +78,13 @@ public class GoGameTest {
 	private List<String> neighboringFields(String field) {
 	  String row = field.substring(0, 1);
 		String column = field.substring(1);
+		
+		int rowAbove = Integer.valueOf(row) - 1;
+		int rowBelow = Integer.valueOf(row) + 1;
+		int columnLeft = Integer.valueOf(column) - 1;
+		int columnRight = Integer.valueOf(column) + 1;
 
-		String rowAbove = String.valueOf(Integer.valueOf(row) - 1);
-		String rowBelow = String.valueOf(Integer.valueOf(row) + 1);
-		String columnLeft = String.valueOf(Integer.valueOf(column) - 1);
-		String columnRight = String.valueOf(Integer.valueOf(column) + 1);
-
-		return asList(rowAbove.concat(column), row.concat(columnRight), rowBelow.concat(column), row.concat(columnLeft));
+		return asList(rowAbove+column, row+columnRight, rowBelow+column, row+columnLeft);
   }
 	}
 
