@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GoGameTest {
@@ -50,6 +51,11 @@ public class GoGameTest {
 		assertThat(totalLiberties, equalTo(8));
 	}
 
+	@Test @Ignore
+	public void aGroupCanBeTakenIfItHasOnlyOneLIberty() {
+
+	}
+	
 	class Stones {
 
 		private Set<String> neighboringFields(List<String> fieldsTaken) {
@@ -93,10 +99,6 @@ public class GoGameTest {
 		}
 	}
 
-	@Test
-	public void aGroupCanBeTakenIfItHasOnlyOneLIberty() {
-
-	}
 
 	// theGameISOverWhenAPlayerCapturesAtleastOneStone
 	// aPlayerCanPlayOnAFieldThatISntTakenAlready
