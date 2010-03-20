@@ -1,5 +1,6 @@
 package ticTacToeAgain;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -15,7 +16,9 @@ public class TicTacToeTest {
 	 */
 
 	@Test
-  public void testname() throws Exception {
-	  
+  public void gameIsOverWhenAllFieldsAreTaken() throws Exception {
+		boolean allFieldsAreTaken = true;
+		boolean gameIsOver = allFieldsAreTaken ;
+		assertThat(gameIsOver, is(true));
   }
 }
