@@ -1,7 +1,10 @@
 package ticTacToeAgain;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -18,7 +21,15 @@ public class TicTacToeTest {
 	@Test
   public void gameIsOverWhenAllFieldsAreTaken() throws Exception {
 		boolean allFieldsAreTaken = true;
-		boolean gameIsOver = allFieldsAreTaken ;
+		boolean gameIsOver = allFieldsAreTaken;
 		assertThat(gameIsOver, is(true));
+  }
+	
+	@Test
+  public void gameIsOverWhenAColumnIsTakenByAPlayer() throws Exception {
+	  List<Integer> fieldsTakenByPlayer = asList(1, 2, 3);
+		List<Integer> firstColumn = asList(1, 2, 3);
+	  Boolean gameIsOver = (fieldsTakenByPlayer.equals(firstColumn));
+		assertThat("A column is taken, game is over", gameIsOver , is(true));
   }
 }
