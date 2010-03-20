@@ -38,20 +38,28 @@ public class GoGameTest {
 	@Test
 	public void theNumberLibertiesOfAGroupOfTwoIsTheSumOfAllStonesLiberties() {
 		List<String> fieldsTaken = asList("22", "32");
-		List<String> cornersForB2 = neighboringFields("22");
-		List<String> cornersForC2 = neighboringFields("32");
-		int totalLiberties = cornersFreeForTwoFields(fieldsTaken, cornersForB2, cornersForC2);
+		int totalLiberties = libertiesFor(fieldsTaken);
 		assertThat(totalLiberties, equalTo(6));
 	}
 
 	@Test
 	public void theNumberLibertiesOfAGroupOfThreeIsTheSumOfAllStonesLiberties() {
 		List<String> fieldsTaken = asList("22", "32", "42");
-		List<String> cornersForB2 = neighboringFields("22");
-		List<String> cornersForC2 = neighboringFields("32");
-		List<String> cornersForD2 = neighboringFields("42");
-		int totalLiberties = cornersFreeForTwoFields(fieldsTaken, cornersForB2, cornersForC2, cornersForD2);
+		int totalLiberties = libertiesFor(fieldsTaken);
 		assertThat(totalLiberties, equalTo(8));
+	}
+	
+	private int libertiesFor(List<String> fieldsTaken) {
+		return neighboringFields(fieldsTaken).size();
+	}
+	
+	private Set<String> neighboringFields(List<String> fieldsTaken) {
+		Set<String> corners = new TreeSet<String>();
+		for (String field : fieldsTaken) {
+			corners.addAll(neighboringFields(field));
+		}
+		corners.removeAll(fieldsTaken);
+		return corners;
 	}
 
 	/*
@@ -72,15 +80,6 @@ public class GoGameTest {
 		String columnRight = String.valueOf(Integer.valueOf(column) + 1);
 
 		return asList(rowAbove.concat(column), row.concat(columnRight), rowBelow.concat(column), row.concat(columnLeft));
-	}
-
-	private int cornersFreeForTwoFields(List<String> fieldsTaken, List<String>... cornersForEveryElement) {
-		Set<String> corners = new TreeSet<String>();
-		for (List<String> cornersForX : cornersForEveryElement) {
-			corners.addAll(cornersForX);
-		}
-		corners.removeAll(fieldsTaken);
-		return corners.size();
 	}
 
 	@Test
