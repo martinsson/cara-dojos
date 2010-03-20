@@ -54,7 +54,7 @@ public class GoGameTest {
 	 */
 	@Test
 	public void neighboringFieldsReturnsTheFourSurroundingFields() throws Exception {
-		assertThat(neighboringFieldz("22"), equalTo(asList("12", "23", "32", "21")));
+		assertThat(new Field("22").neighboringFields(), equalTo(asList("12", "23", "32", "21")));
 	}
 
 	private int libertiesFor(List<String> fieldsTaken) {
@@ -64,16 +64,12 @@ public class GoGameTest {
 	private Set<String> neighboringFields(List<String> fieldsTaken) {
 		Set<String> corners = new TreeSet<String>();
 		for (String field : fieldsTaken) {
-			corners.addAll(neighboringFieldz(field));
+			corners.addAll(new Field(field).neighboringFields());
 		}
 		corners.removeAll(fieldsTaken);
 		return corners;
 	}
 	
-	private List<String> neighboringFieldz(String field) {
-		return new Field(field).neighboringFields();
-	}
-
 	class Field {
 		private final String row;
 		private final String column;
