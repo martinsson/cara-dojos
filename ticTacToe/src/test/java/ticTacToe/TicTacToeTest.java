@@ -25,7 +25,7 @@ players take turns taking fields until the game is over
 	@Test public void gameIsOverWhenAllFieldsAreTaken() throws Exception {
 		List<Integer> fieldsTakenByWhite = list(1, 2, 5, 6, 7);
 		List<Integer> fieldsTakenByBlack = list(3, 4, 8, 9);
-		boolean gameIsOver = game.gameIsOver(fieldsTakenByWhite,
+		boolean gameIsOver = isGameOver(fieldsTakenByWhite,
 				fieldsTakenByBlack);
 		assertTrue("game should have been over when all fields are taken", gameIsOver);
 	}
@@ -64,7 +64,7 @@ players take turns taking fields until the game is over
 	@Test public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
 		List<Integer> fieldsTakenByWhite = list(2, 3, 4);
 		List<Integer> fieldsTakenByBlack = list(5, 6, 7);
-		boolean couldTakeField = game.play(fieldsTakenByWhite, fieldsTakenByBlack, 1);
+		boolean couldTakeField = play(fieldsTakenByWhite, fieldsTakenByBlack, 1);
 		assertTrue("should have been allowed to take field",
 				couldTakeField);
 	}
@@ -72,7 +72,7 @@ players take turns taking fields until the game is over
 	@Test public void aPlayerCanNOTTakeAFieldIfAlreadyTaken() throws Exception {
 		List<Integer> fieldsTakenByWhite = list(2, 3, 4);
 		List<Integer> fieldsTakenByBlack = list(1);
-		boolean couldTakeField = game.play(fieldsTakenByWhite, fieldsTakenByBlack, 1);
+		boolean couldTakeField = play(fieldsTakenByWhite, fieldsTakenByBlack, 1);
 		assertFalse("should not have been allowed to take field",
 				couldTakeField);
 	}
@@ -81,22 +81,26 @@ players take turns taking fields until the game is over
 	public void playersTakeTurnsUntilGameIsOver() throws Exception {
 		List<Integer> white = list();
 		List<Integer> black = list();
-		game.play(white, black, 9);
-		game.play(black, white, 8);
-		game.play(white, black, 6);
-		game.play(black, white, 7);
-		assertFalse("game should not be over", game.gameIsOver(white, black));
-		game.play(white, black, 3);
-		assertTrue("game should not be over", game.gameIsOver(white, black));
+		play(white, black, 9);
+		play(black, white, 8);
+		play(white, black, 6);
+		play(black, white, 7);
+		assertFalse("game should not be over", isGameOver(white, black));
+		play(white, black, 3);
+		assertTrue("game should not be over", isGameOver(white, black));
 	}
+
+	private boolean play(List<Integer> white, List<Integer> black, int fieldToTake) {
+	  return game.play(new Player(white), new Player(black), fieldToTake);
+  }
 	
 	private boolean isGameOver(List<Integer> fieldsTakenByBlack,
 			List<Integer> fieldsTakenByWhite) {
-		return game.gameIsOver(fieldsTakenByWhite, fieldsTakenByBlack);
+		return game.gameIsOver(new Player(fieldsTakenByWhite), new Player(fieldsTakenByBlack));
 	}
 	
 	private boolean onePlayerHasWon(List<Integer> fieldsTakenByPlayer) {
-		return new Player(fieldsTakenByPlayer).hasWon(game);
+		return new Player(fieldsTakenByPlayer).hasWon();
 	}
 	
 	private List<Integer> list(Integer...fields) {
