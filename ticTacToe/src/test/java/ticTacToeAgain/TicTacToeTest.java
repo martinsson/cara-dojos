@@ -1,6 +1,7 @@
 package ticTacToeAgain;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,12 +10,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
 public class TicTacToeTest {
+	private static final List<Integer> EMPTY_LIST = emptyList();
 	/*
 	a game is over when all fields are taken
 	a game is over when all fields in a column are taken by a player
@@ -66,14 +69,14 @@ public class TicTacToeTest {
 	@Test
   public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
 	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
-	  boolean canTakeField = canTakeField(4, takenByWhite);
+	  boolean canTakeField = canTakeField(4, takenByWhite, EMPTY_LIST);
 	  assertTrue(canTakeField);
   }
 
 	@Test
   public void aPlayerCanNOTTakeAFieldHeAlreadyTook() throws Exception {
 	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
-	  boolean canTakeField = canTakeField(5, takenByWhite);
+	  boolean canTakeField = canTakeField(5, takenByWhite, EMPTY_LIST);
 	  assertFalse(canTakeField);
   }
 
@@ -86,13 +89,10 @@ public class TicTacToeTest {
 	  assertFalse(canTakeField);
   }
 
-	private boolean canTakeField(int fieldToTake, List<Integer> takenByWhite, List<Integer> takenByBlack) {
-	  return !(takenByWhite.contains(fieldToTake) || takenByBlack.contains(fieldToTake));
+  private boolean canTakeField(int fieldToTake, List<Integer> takenByWhite, List<Integer> takenByBlack) {
+    return rules.canTakeField(fieldToTake, takenByWhite, takenByBlack);
   }
 	
-	private boolean canTakeField(int fieldToTake, List<Integer> takenByWhite) {
-		return !takenByWhite.contains(fieldToTake);
-	}
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return rules.gameIsOver(fieldsTakenByPlayer);
 	}
@@ -105,6 +105,10 @@ public class TicTacToeTest {
 		Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 			return anyOf(ANY_COLUMN, ANY_ROW, ANY_DIAGONAL).matches(fieldsTakenByPlayer);
 		}
+
+		boolean canTakeField(int fieldToTake, List<Integer> takenByWhite, List<Integer> takenByBlack) {
+      return !(takenByWhite.contains(fieldToTake) || takenByBlack.contains(fieldToTake));
+    }
 		
 	}
 }
