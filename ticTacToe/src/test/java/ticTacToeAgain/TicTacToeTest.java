@@ -54,6 +54,11 @@ public class TicTacToeTest {
 	  assertThat(gameIsOver(asList(4, 5, 6)), is(true));
 	  assertThat(gameIsOver(asList(7, 8, 9)), is(true));
   }
+
+	@Test
+  public void gameIsOverWhenADiagonalIsTaken() throws Exception {
+	  assertThat(gameIsOver(asList(1, 5, 9)), is(true));
+  }
 	
 	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
 		return anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9)).matches(fieldsTakenByPlayer);
@@ -61,8 +66,14 @@ public class TicTacToeTest {
 	
 	Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return aColumnIsTaken(fieldsTakenByPlayer)  
-		|| aRowIsTaken(fieldsTakenByPlayer);
+		|| aRowIsTaken(fieldsTakenByPlayer)
+		|| aDiagonalIsTaken(fieldsTakenByPlayer);
 	}
+
+	private boolean aDiagonalIsTaken(List<Integer> fieldsTakenByPlayer) {
+	  // TODO Auto-generated method stub
+	  return false;
+  }
 
 	private boolean aRowIsTaken(List<Integer> fieldsTakenByPlayer) {
 	  return anyOf(hasItems(1, 2, 3), hasItems(4, 5, 6), hasItems(7, 8, 9)).matches(fieldsTakenByPlayer);
