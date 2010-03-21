@@ -51,10 +51,6 @@ public class TicTacToeTest {
 	@Test
   public void gameIsOverWhenARowIsTaken() throws Exception {
 	  assertThat(gameIsOver(asList(1, 2, 3)), is(true));
-  }
-	
-	@Test
-  public void gameIsOverWhenSecondRowIsTaken() throws Exception {
 	  assertThat(gameIsOver(asList(4, 5, 6)), is(true));
   }
 	
