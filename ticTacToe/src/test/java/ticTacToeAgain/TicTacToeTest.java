@@ -66,17 +66,33 @@ public class TicTacToeTest {
 	@Test
   public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
 	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
-	  boolean canTakeField = !takenByWhite.contains(4);
+	  boolean canTakeField = canTakeField(4, takenByWhite);
 	  assertTrue(canTakeField);
   }
-	
+
 	@Test
   public void aPlayerCanNOTTakeAFieldHeAlreadyTook() throws Exception {
 	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
-	  boolean canTakeField = !takenByWhite.contains(5);
+	  boolean canTakeField = canTakeField(5, takenByWhite);
 	  assertFalse(canTakeField);
   }
+
+	@Test
+  public void aPlayerCannotTakeAFieldTakenByAnotherPlayer() throws Exception {
+	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
+		List<Integer> takenByBlack = new ArrayList<Integer>(asList(3, 4, 6));
+		int fieldToTake = 6;
+	  boolean canTakeField = canTakeField(fieldToTake, takenByWhite, takenByBlack);
+	  assertFalse(canTakeField);
+  }
+
+	private boolean canTakeField(int fieldToTake, List<Integer> takenByWhite, List<Integer> takenByBlack) {
+	  return !(takenByWhite.contains(fieldToTake) || takenByBlack.contains(fieldToTake));
+  }
 	
+	private boolean canTakeField(int fieldToTake, List<Integer> takenByWhite) {
+		return !takenByWhite.contains(fieldToTake);
+	}
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return rules.gameIsOver(fieldsTakenByPlayer);
 	}
