@@ -96,7 +96,7 @@ players take turns taking fields until the game is over
 	}
 	
 	private boolean onePlayerHasWon(List<Integer> fieldsTakenByPlayer) {
-		return game.onePlayerHasWon(fieldsTakenByPlayer);
+		return new Player(fieldsTakenByPlayer).hasWon(game);
 	}
 	
 	private List<Integer> list(Integer...fields) {
