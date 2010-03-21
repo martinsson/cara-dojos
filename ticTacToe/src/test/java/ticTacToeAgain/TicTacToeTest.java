@@ -51,15 +51,21 @@ public class TicTacToeTest {
 	@Test
   public void gameIsOverWhenARowIsTaken() throws Exception {
 	  assertThat(gameIsOver(asList(1, 2, 3)), is(true));
-	  
   }
+	
+	@Test
+  public void gameIsOverWhenSecondRowIsTaken() throws Exception {
+	  assertThat(gameIsOver(asList(4, 5, 6)), is(true));
+  }
+	
 	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
 		return anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9)).matches(fieldsTakenByPlayer);
 	}
 	
 	Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return aColumnIsTaken(fieldsTakenByPlayer)  
-		|| hasItems(1, 2, 3).matches(fieldsTakenByPlayer);
+		|| hasItems(1, 2, 3).matches(fieldsTakenByPlayer)
+		|| hasItems(4, 5, 6).matches(fieldsTakenByPlayer);
 	}
 	
 	class GameRules {
