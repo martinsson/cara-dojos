@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 public class TicTacToeTest {
@@ -36,9 +37,6 @@ public class TicTacToeTest {
 	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
   }
 	
-	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-	  return rules.gameIsOver(fieldsTakenByPlayer);
-  }
 
 	@Test
   public void gameIsOverWhenThirdColumnIsTaken() throws Exception {
@@ -65,25 +63,17 @@ public class TicTacToeTest {
 	  assertThat(gameIsOver(asList(1, 3, 5, 7, 8)), is(true));
   }
 	
+	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
+		return rules.gameIsOver(fieldsTakenByPlayer);
+	}
 	
+	private static final Matcher<Iterable<Integer>> ANY_COLUMN = anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9));
+	private static final Matcher<Iterable<Integer>> ANY_ROW = anyOf(hasItems(1, 2, 3), hasItems(4, 5, 6), hasItems(7, 8, 9));
+	private static final Matcher<Iterable<Integer>> ANY_DIAGONAL = anyOf(hasItems(1, 5, 9), hasItems(3, 5, 7));
 	class GameRules {
 
 		Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-			return aColumnIsTaken(fieldsTakenByPlayer)  
-			|| aRowIsTaken(fieldsTakenByPlayer)
-			|| aDiagonalIsTaken(fieldsTakenByPlayer);
-		}
-		
-		private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
-			return anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9)).matches(fieldsTakenByPlayer);
-		}
-		
-		private boolean aDiagonalIsTaken(List<Integer> fieldsTakenByPlayer) {
-			return anyOf(hasItems(1, 5, 9), hasItems(3, 5, 7)).matches(fieldsTakenByPlayer);
-		}
-		
-		private boolean aRowIsTaken(List<Integer> fieldsTakenByPlayer) {
-			return anyOf(hasItems(1, 2, 3), hasItems(4, 5, 6), hasItems(7, 8, 9)).matches(fieldsTakenByPlayer);
+			return anyOf(ANY_COLUMN, ANY_ROW, ANY_DIAGONAL).matches(fieldsTakenByPlayer);
 		}
 		
 	}
