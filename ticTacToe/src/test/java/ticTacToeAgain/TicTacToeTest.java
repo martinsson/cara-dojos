@@ -32,30 +32,36 @@ public class TicTacToeTest {
 	@Test
   public void gameIsOverWhenSecondColumnIsTaken() throws Exception {
 	  List<Integer> fieldsTakenByPlayer = asList(2, 5, 8);
-	  assertThat(rules.gameIsOver(fieldsTakenByPlayer), is(true));
+	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
   }
 	
 	@Test
   public void gameIsOverWhenThirdColumnIsTaken() throws Exception {
 	  List<Integer> fieldsTakenByPlayer = asList(3, 6, 9);
-	  assertThat(rules.gameIsOver(fieldsTakenByPlayer), is(true));
+	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
   }
 	
 	@Test
   public void gameIsOverWhenOneColumnAndMoreIsTaken() throws Exception {
 		List<Integer> fieldsTakenByPlayer = asList(1, 2, 4, 5, 8);
-	  assertThat(rules.gameIsOver(fieldsTakenByPlayer), is(true));
+	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
   }
 
+	@Test
+  public void gameIsOverWhenARowIsTaken() throws Exception {
+	  assertThat(, matcher)
+	  
+  }
+	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
+		return anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9)).matches(fieldsTakenByPlayer);
+	}
+	
+	Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
+		return aColumnIsTaken(fieldsTakenByPlayer);
+	}
+	
 	class GameRules {
 
-		private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
-      return anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9)).matches(fieldsTakenByPlayer);
-    }
-
-		Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-      return aColumnIsTaken(fieldsTakenByPlayer);
-    }
 		
 	}
 }
