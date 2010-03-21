@@ -66,8 +66,15 @@ public class TicTacToeTest {
 	@Test
   public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
 	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
-	  boolean canTakeField = takenByWhite.add(4);
+	  boolean canTakeField = !takenByWhite.contains(4);
 	  assertTrue(canTakeField);
+  }
+	
+	@Test
+  public void aPlayerCanNOTTakeAFieldHeAlreadyTook() throws Exception {
+	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
+	  boolean canTakeField = !takenByWhite.contains(5);
+	  assertFalse(canTakeField);
   }
 	
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
