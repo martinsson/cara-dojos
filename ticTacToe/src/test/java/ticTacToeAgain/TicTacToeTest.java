@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matcher;
@@ -64,7 +65,7 @@ public class TicTacToeTest {
 
 	@Test
   public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
-	  List<Integer> takenByWhite = asList(1, 2, 5);
+	  List<Integer> takenByWhite = new ArrayList<Integer>(asList(1, 2, 5));
 	  boolean canTakeField = takenByWhite.add(4);
 	  assertTrue(canTakeField);
   }
