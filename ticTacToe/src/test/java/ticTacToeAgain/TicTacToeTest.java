@@ -3,6 +3,7 @@ package ticTacToeAgain;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -49,7 +50,7 @@ public class TicTacToeTest {
 
 	@Test
   public void gameIsOverWhenARowIsTaken() throws Exception {
-	  assertThat(, matcher)
+	  assertThat(gameIsOver(asList(1, 2, 3)), is(true));
 	  
   }
 	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
@@ -57,7 +58,8 @@ public class TicTacToeTest {
 	}
 	
 	Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-		return aColumnIsTaken(fieldsTakenByPlayer);
+		return aColumnIsTaken(fieldsTakenByPlayer)  
+		|| hasItems(1, 2, 3).matches(fieldsTakenByPlayer);
 	}
 	
 	class GameRules {
