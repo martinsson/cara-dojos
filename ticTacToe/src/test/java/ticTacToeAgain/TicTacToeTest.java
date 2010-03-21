@@ -47,11 +47,7 @@ public class TicTacToeTest {
   }
 
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
-	  return gameIsOver(aColumnIsTaken(fieldsTakenByPlayer));
-  }
-
-	private Boolean gameIsOver(boolean aColumnIsTaken) {
-	  return aColumnIsTaken;
+	  return aColumnIsTaken(fieldsTakenByPlayer);
   }
 
 	private boolean aColumnIsTaken(List<Integer> fieldsTakenByPlayer) {
