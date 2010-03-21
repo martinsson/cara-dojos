@@ -36,7 +36,6 @@ public class TicTacToeTest {
 	  List<Integer> fieldsTakenByPlayer = asList(2, 5, 8);
 	  assertThat(gameIsOver(fieldsTakenByPlayer), is(true));
   }
-	
 
 	@Test
   public void gameIsOverWhenThirdColumnIsTaken() throws Exception {
@@ -62,11 +61,18 @@ public class TicTacToeTest {
 	  assertThat(gameIsOver(asList(1, 5, 9)), is(true));
 	  assertThat(gameIsOver(asList(1, 3, 5, 7, 8)), is(true));
   }
+
+	@Test
+  public void aPlayerCanTakeAFieldIfNotAlreadyTaken() throws Exception {
+	  List<Integer> takenByWhite = asList(1, 2, 5);
+	  boolean canTakeField = takenByWhite.add(4);
+	  assertTrue(canTakeField);
+  }
 	
 	private Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return rules.gameIsOver(fieldsTakenByPlayer);
 	}
-	
+
 	private static final Matcher<Iterable<Integer>> ANY_COLUMN = anyOf(hasItems(1, 4, 7), hasItems(2, 5, 8), hasItems(3, 6, 9));
 	private static final Matcher<Iterable<Integer>> ANY_ROW = anyOf(hasItems(1, 2, 3), hasItems(4, 5, 6), hasItems(7, 8, 9));
 	private static final Matcher<Iterable<Integer>> ANY_DIAGONAL = anyOf(hasItems(1, 5, 9), hasItems(3, 5, 7));
