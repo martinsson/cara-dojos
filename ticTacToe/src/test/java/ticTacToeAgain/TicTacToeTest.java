@@ -64,9 +64,12 @@ public class TicTacToeTest {
 	
 	Boolean gameIsOver(List<Integer> fieldsTakenByPlayer) {
 		return aColumnIsTaken(fieldsTakenByPlayer)  
-		|| hasItems(1, 2, 3).matches(fieldsTakenByPlayer)
-		|| hasItems(4, 5, 6).matches(fieldsTakenByPlayer);
+		|| aRowIsTaken(fieldsTakenByPlayer);
 	}
+
+	private boolean aRowIsTaken(List<Integer> fieldsTakenByPlayer) {
+	  return anyOf(hasItems(1, 2, 3), hasItems(4, 5, 6)).matches(fieldsTakenByPlayer);
+  }
 	
 	class GameRules {
 
