@@ -23,4 +23,7 @@ class Game {
 		+ white.fields.size()
 		>= FIELDS_IN_GAME;
 	}
+	boolean fieldAlreadyTaken(Player player, Player otherPlayer, int field) {
+    return player.alreadyHas(field) ||otherPlayer.alreadyHas(field);
+  }
 }
