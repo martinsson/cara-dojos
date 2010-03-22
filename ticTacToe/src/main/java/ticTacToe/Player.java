@@ -16,14 +16,14 @@ public class Player {
 		fields = fieldsTaken;
   }
 
-	public final List<Integer> fields;
+	private final List<Integer> fields;
 
 	boolean hasWon() {
   	return anyOf(COLUMN, ROW, DIAGONAL).matches(fields);
   }
 
 	boolean takeField(Game game, int field) {
-  	if (! (game.fieldAlreadyTaken(field))) {
+  	if (! game.fieldAlreadyTaken(field)) {
   		return fields.add(field);
   	}
   	return false;
@@ -36,6 +36,4 @@ public class Player {
 	public int numberOfFields() {
 	  return fields.size();
   }
-
-	
 }
