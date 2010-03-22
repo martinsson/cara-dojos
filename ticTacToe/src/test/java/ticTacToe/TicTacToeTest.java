@@ -91,7 +91,7 @@ players take turns taking fields until the game is over
 	}
 
 	private boolean play(List<Integer> white, List<Integer> black, int fieldToTake) {
-	  return game.play(new Player(white), new Player(black), fieldToTake);
+	  return new Player(white).takeField(game, new Player(black), fieldToTake);
   }
 	
 	private boolean isGameOver(List<Integer> fieldsTakenByBlack,

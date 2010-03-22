@@ -23,14 +23,4 @@ class Game {
 		+ white.fields.size()
 		>= FIELDS_IN_GAME;
 	}
-	private boolean canTakeField(List<Integer> fieldsTakenByWhite, List<Integer> fieldsTakenByBlack, int fieldToTake) {
-		return ! (fieldsTakenByWhite.contains(fieldToTake)
-				||fieldsTakenByBlack.contains(fieldToTake));
-	}
-	boolean play(Player white, Player otherPlayer, int field) {
-		if (canTakeField(white.fields, otherPlayer.fields, field)) {
-			return white.fields.add(field);
-		}
-		return false;
-	}
 }
