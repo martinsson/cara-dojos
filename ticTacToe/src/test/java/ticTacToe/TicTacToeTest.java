@@ -12,7 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class TicTacToeTest {
-private Game game = new Game();
+private Game game = new Game(null, null);
 
 /*
 a game is over when all fields are taken
@@ -91,7 +91,10 @@ players take turns taking fields until the game is over
 	}
 
 	private boolean play(List<Integer> white, List<Integer> black, int fieldToTake) {
-	  return new Player(white).takeField(game, new Player(black), fieldToTake);
+		Player whitePlayer = new Player(white);
+		Player blackPlayer = new Player(black);
+		Game currentGame = new Game(blackPlayer, whitePlayer);
+	  return whitePlayer.takeField(currentGame, fieldToTake);
   }
 	
 	private boolean isGameOver(List<Integer> fieldsTakenByBlack,

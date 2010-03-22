@@ -22,8 +22,8 @@ public class Player {
   	return anyOf(COLUMN, ROW, DIAGONAL).matches(fields);
   }
 
-	boolean takeField(Game game, Player otherPlayer, int field) {
-  	if (! (game.fieldAlreadyTaken(this, otherPlayer, field))) {
+	boolean takeField(Game game, int field) {
+  	if (! (game.fieldAlreadyTaken(field))) {
   		return fields.add(field);
   	}
   	return false;
@@ -31,6 +31,10 @@ public class Player {
 
 	boolean alreadyHas(int field) {
 	  return fields.contains(field);
+  }
+
+	public int numberOfFields() {
+	  return fields.size();
   }
 
 	
