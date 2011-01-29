@@ -1,14 +1,15 @@
 package telldontask;
 
+import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.on;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -21,17 +22,29 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.lambdaj.Lambda;
+
 public class KeywordReporterTest {
     
-    public interface Filter {
+    public static class NoFilter implements Filter {
+        public List<Keyword> filter(List<Keyword> keywordList) {
+            return keywordList;
+        }
+    }
 
+    public interface Filter {
+        List<Keyword> filter(List<Keyword> keywordList);
     }
 
     public static class AlreadyPublishedKeywordsRemover implements Filter {
-
+        public List<Keyword> filter(List<Keyword> keywordList) {
+            List<Keyword> remainingKeywords = Lambda.select(keywordList, having(on(Keyword.class).isPublished(), equalTo("no")));
+            return remainingKeywords;
+        }
     }
 
     @Mock
@@ -54,6 +67,11 @@ public class KeywordReporterTest {
         public String isPublished() {
             return isPublished;
         }
+        
+        @Override
+        public String toString() {
+            return searchTerm;
+        }
 
     }
 
@@ -66,23 +84,34 @@ public class KeywordReporterTest {
     public static class KeywordReporter {
 
         private final KeywordProvider keywordProvider;
+        private final Filter filter;
 
         public KeywordReporter(KeywordProvider keywordProvider) {
-            this.keywordProvider = keywordProvider;
+            this(keywordProvider, new NoFilter());
         }
 
-        public KeywordReporter(KeywordProvider keywordProvider2, Filter publishedKeywords) {
-            // TODO Auto-generated constructor stub
+        public KeywordReporter(KeywordProvider keywordProvider, Filter publishedKeywords) {
+            this.keywordProvider = keywordProvider;
+            this.filter = publishedKeywords;
         }
 
         public void report() throws IOException {
             PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream("report.csv")));
-            writer.println("Search term; published");
             List<Keyword> keywords = keywordProvider.getKeywords();
-            for (Keyword keyword : keywords) {
+            List<Keyword> filteredKeywords = filter.filter(keywords);
+            writeHeader(writer);
+            writeLines(writer, filteredKeywords);
+            writer.close();
+        }
+
+        private void writeLines(PrintWriter writer, List<Keyword> filteredKeywords) {
+            for (Keyword keyword : filteredKeywords) {
                 writer.println(keyword.getSearchTerm() +"; " + keyword.isPublished());
             }
-            writer.close();
+        }
+
+        private void writeHeader(PrintWriter writer) {
+            writer.println("Search term; published");
         }
 
     }
@@ -137,6 +166,31 @@ public class KeywordReporterTest {
     public void itFiltersTheKeywords() throws Exception {
         Filter publishedKeywords = new AlreadyPublishedKeywordsRemover();
         KeywordReporter reporter = new KeywordReporter(keywordProvider, publishedKeywords);
+        List<Keyword> keywordList = asList(
+                new Keyword("Macbook pro", "no"),
+                new Keyword("Ipod Nano red", "no"),
+                new Keyword("Samsung LCD TV", "yes"));
+        when(keywordProvider.getKeywords()).thenReturn(keywordList);
+        reporter.report();
+    
+        List<String> reportContent = getReportContent();
+        assertThat(reportContent, contains(
+                "Search term; published",
+                "Macbook pro; no",
+                "Ipod Nano red; no"));
+        
+    }
+    
+    @Test
+    public void removesKeywordsThatArePublished() throws Exception {
+        Filter filter = new AlreadyPublishedKeywordsRemover();
+        Keyword kwdToRemain = new Keyword("toto", "no");
+        Keyword kwdToBeFiltered = new Keyword("rototo", "yes");
+        List<Keyword> keywordList = asList(
+                kwdToRemain,
+                kwdToBeFiltered);
+        List<Keyword> remainingKeywords = filter.filter(keywordList);
+        assertThat(remainingKeywords, contains(kwdToRemain));
     }
 
     private List<String> getReportContent() throws FileNotFoundException {
