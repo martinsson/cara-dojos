@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import telldontask.Filter.AlreadyPublishedKeywordsRemover;
+import telldontask.Filter.NoFilter;
 
 public class KeywordReporterTest {
 
@@ -34,7 +35,7 @@ public class KeywordReporterTest {
     @Test
     public void writesAReportToDisk() throws Exception {
         when(keywordProvider.getKeywords()).thenReturn(asList(new Keyword("Canon eos 5D", "yes")));
-        KeywordReporter reporter = new KeywordReporter(keywordProvider);
+        KeywordReporter reporter = newKeywordReporter();
         reporter.report();
         
         Scanner reportFile = new Scanner(new File("report.csv"));
@@ -43,11 +44,15 @@ public class KeywordReporterTest {
         assertThat(header, equalTo("Search term; published"));
         assertThat(firstLine, notNullValue());
     }
+
+    private KeywordReporter newKeywordReporter() {
+        return new KeywordReporter(new DecoratedKeywordProvider(keywordProvider, new NoFilter()));
+    }
     
     @Test
     public void usesTheDataFromTheKeywords() throws Exception {
         when(keywordProvider.getKeywords()).thenReturn(asList(new Keyword("Macbook pro", "no")));
-        KeywordReporter reporter = new KeywordReporter(keywordProvider);
+        KeywordReporter reporter = newKeywordReporter();
         reporter.report();
         
         Scanner reportFile = new Scanner(new File("report.csv"));
@@ -62,7 +67,7 @@ public class KeywordReporterTest {
                 new Keyword("Ipod Nano red", "yes"),
                 new Keyword("Samsung LCD TV", "yes"));
         when(keywordProvider.getKeywords()).thenReturn(keywordList);
-        KeywordReporter reporter = new KeywordReporter(keywordProvider);
+        KeywordReporter reporter = newKeywordReporter();
         reporter.report();
         
         List<String> reportContent = getReportContent();
@@ -75,7 +80,7 @@ public class KeywordReporterTest {
     @Test
     public void itFiltersTheKeywords() throws Exception {
         Filter publishedKeywords = new AlreadyPublishedKeywordsRemover();
-        KeywordReporter reporter = new KeywordReporter(keywordProvider, publishedKeywords);
+        KeywordReporter reporter = new KeywordReporter(new DecoratedKeywordProvider(keywordProvider, publishedKeywords));
         List<Keyword> keywordList = asList(
                 new Keyword("Macbook pro", "no"),
                 new Keyword("Ipod Nano red", "no"),

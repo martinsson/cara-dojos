@@ -2,7 +2,7 @@ package telldontask;
 
 import java.util.List;
 
-public class DecoratedKeywordProvider  {
+public class DecoratedKeywordProvider implements KeywordProvider {
 
     private final KeywordProvider keywordProvider;
     private final Filter filter;
@@ -12,11 +12,12 @@ public class DecoratedKeywordProvider  {
         this.filter = filter;
     }
 
-    List<Keyword> getKeywords(KeywordReporter keywordReporter) {
+    public List<Keyword> getKeywords() {
         List<Keyword> keywords = keywordProvider.getKeywords();
         List<Keyword> filteredKeywords = filter.filter(keywords);
         return filteredKeywords;
     }
+
 
 
 }

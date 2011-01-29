@@ -20,7 +20,7 @@ class ReportPublisher {
         writer.println("Search term; published");
     }
 
-    void printReport(List<Keyword> filteredKeywords) throws FileNotFoundException {
+    public void printReport(List<Keyword> filteredKeywords) throws FileNotFoundException {
         PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(ReportPublisher.REPORT_FILE)));
         writeHeader(writer);
         writeLines(writer, filteredKeywords);
