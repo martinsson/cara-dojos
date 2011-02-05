@@ -1,8 +1,8 @@
 package code.puzzles;
 
 public class WebserviceHelper {
-    private Webservice webservice;
-    public Products getProducts(Integer category, Integer quantity) throws WebserviceException{
+    private final Webservice webservice = new Webservice();
+    public Products getProducts(final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
             products = webservice.getProducts(category, quantity);
@@ -12,7 +12,7 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
-    public Rebates getRebates(Products products) throws WebserviceException{
+    public Rebates getRebates(final Products products) throws WebserviceException{
         Rebates rebates;
         try {
             rebates = webservice.getRebates(products);
