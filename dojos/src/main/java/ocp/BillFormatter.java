@@ -2,15 +2,12 @@ package ocp;
 
 public class BillFormatter {
 
-    public String format(int priceInCents, Currency currency) {
-        String priceAsString = String.valueOf(priceInCents);
-        String cents = priceAsString.substring(priceAsString.length()-2);
-        int rest = priceInCents / 100;
+    public String format(int price, Currency currency) {
         String formattedPrice = "";
         if (currency == Currency.EUROS) {
-            formattedPrice = rest + "Û" + cents;
+            formattedPrice = price + "Û";
         } else if (currency == Currency.POUNDS) {
-            formattedPrice = "£" + rest + "." + cents;
+            formattedPrice = "£" + price;
         }
         return formattedPrice;
     }
