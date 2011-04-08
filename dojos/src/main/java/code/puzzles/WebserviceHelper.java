@@ -1,8 +1,12 @@
 package code.puzzles;
 
+import code.puzzles.TheRestOfTheCode.Products;
+import code.puzzles.TheRestOfTheCode.Webservice;
+import code.puzzles.TheRestOfTheCode.WebserviceException;
+
 public class WebserviceHelper {
     private Webservice webservice;
-    public Products getProducts(Integer category, Integer quantity) throws WebserviceException{
+    public Products getProducts(final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
             products = webservice.getProducts(category, quantity);
@@ -12,12 +16,12 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
-    public Products getRebates(String brand) throws WebserviceException{
+    public Products getRebates(final String brand) throws WebserviceException{
         Products products;
         try {
             products = webservice.getProducts(brand);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice", e);
+            throw new WebserviceException("failed invoking the webservice");
         }
         ifNullThrowError(products);
         return products;
@@ -27,27 +31,5 @@ public class WebserviceHelper {
            throw new WebserviceException("The webservice returned null");
     }
     
-    static class Webservice {
-        public Products getProducts(Integer category, Integer quantity) {
-            return new Products();
-        }
-        public Products getProducts(String brand) {
-            return new Products();
-        }
-    }
-    static class Products {
-    }
-    static class Rebates {
-    }
 
-    @SuppressWarnings("serial")
-    public static class WebserviceException extends Exception {
-
-        public WebserviceException(String string, RuntimeException e) {
-        }
-
-        public WebserviceException(String string) {
-        }
-
-    }
 }
