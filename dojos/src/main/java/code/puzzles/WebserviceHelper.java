@@ -7,20 +7,20 @@ public class WebserviceHelper {
         try {
             products = webservice.getProducts(category, quantity);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice with category "+category+" and quantity "+quantity, e);
+            throw new WebserviceException("failed invoking the webservice", e);
         }
         ifNullThrowError(products);
         return products;
     }
-    public Rebates getRebates(Products products) throws WebserviceException{
-        Rebates rebates;
+    public Products getRebates(String brand) throws WebserviceException{
+        Products products;
         try {
-            rebates = webservice.getRebates(products);
+            products = webservice.getProducts(brand);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice with products "+products);
+            throw new WebserviceException("failed invoking the webservice", e);
         }
-        ifNullThrowError(rebates);
-        return rebates;
+        ifNullThrowError(products);
+        return products;
     }
     private void ifNullThrowError(Object object) throws WebserviceException {
        if (object==null)
@@ -31,8 +31,8 @@ public class WebserviceHelper {
         public Products getProducts(Integer category, Integer quantity) {
             return new Products();
         }
-        public Rebates getRebates(Products products) {
-            return new Rebates();
+        public Products getProducts(String brand) {
+            return new Products();
         }
     }
     static class Products {
@@ -40,6 +40,7 @@ public class WebserviceHelper {
     static class Rebates {
     }
 
+    @SuppressWarnings("serial")
     public static class WebserviceException extends Exception {
 
         public WebserviceException(String string, RuntimeException e) {
