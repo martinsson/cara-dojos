@@ -6,7 +6,7 @@ import code.puzzles.TheRestOfTheCode.WebserviceException;
 
 public class WebserviceHelper {
     private Webservice webservice;
-    public Products getProducts(final Integer category, final Integer quantity) throws WebserviceException{
+    public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
             products = webservice.getProducts(category, quantity);
@@ -16,7 +16,7 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
-    public Products getRebates(final String brand) throws WebserviceException{
+    public Products getProductsByBrand(final String brand) throws WebserviceException{
         Products products;
         try {
             products = webservice.getProducts(brand);
