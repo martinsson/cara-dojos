@@ -9,31 +9,39 @@ public class WebserviceHelper {
     private Webservice webservice;
     
     public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
-        Products products;
-        try {
-            products = webservice.getProducts(category, quantity);
-        } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice with arguments " + category + " and " + quantity, e);
-        }
-        ifNullThrowError(products);
-        return products;
+        return getProductsForCategoryAndQuantity(category, quantity)
+            .invokeSafely();
     }
-    
+
     public Rebates getRebates(final Products products) throws WebserviceException{
-        Rebates rebates;
-        try {
-            rebates = webservice.getRebates(products);
-        } catch(RuntimeException e) {
-            throw new WebserviceException("failed to get rebates for " + products,  e);
-        }
-        ifNullThrowError(rebates);
-        return rebates;
+        return getRebatesFor(products)
+            .invokeSafely();
+    }
+
+    public WsInvoker<Products> getProductsForCategoryAndQuantity(final Integer category, final Integer quantity) {
+        return new WsInvoker<Products>() {
+            public Products invoke() {
+                return webservice.getProducts(category, quantity);
+            }
+            
+            public String errorMessage() {
+                return "failed invoking the webservice with arguments " + category + " and " + quantity;
+            }
+        };
+    }
+
+    public WsInvoker<Rebates> getRebatesFor(final Products products) {
+        return new WsInvoker<Rebates>() {
+            public Rebates invoke() {
+                return webservice.getRebates(products);
+            }
+
+            public String errorMessage() {
+                return "failed to get rebates for " + products;
+            }
+        };
     }
     
-    private void ifNullThrowError(Object object) throws WebserviceException {
-       if (object==null)
-           throw new WebserviceException("The webservice returned null");
-    }
     
 
 }
