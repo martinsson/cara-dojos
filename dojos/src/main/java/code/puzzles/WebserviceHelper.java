@@ -13,7 +13,7 @@ public class WebserviceHelper {
         try {
             products = webservice.getProducts(category, quantity);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice", e);
+            throw new WebserviceException("failed invoking the webservice with arguments " + category + " and " + quantity, e);
         }
         ifNullThrowError(products);
         return products;
@@ -24,7 +24,7 @@ public class WebserviceHelper {
         try {
             rebates = webservice.getRebates(products);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice", e);
+            throw new WebserviceException("failed to get rebates for " + products,  e);
         }
         ifNullThrowError(rebates);
         return rebates;
