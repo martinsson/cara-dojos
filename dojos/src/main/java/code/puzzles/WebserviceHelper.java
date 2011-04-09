@@ -1,11 +1,13 @@
 package code.puzzles;
 
 import code.puzzles.TheRestOfTheCode.Products;
+import code.puzzles.TheRestOfTheCode.Rebates;
 import code.puzzles.TheRestOfTheCode.Webservice;
 import code.puzzles.TheRestOfTheCode.WebserviceException;
 
 public class WebserviceHelper {
     private Webservice webservice;
+    
     public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
@@ -16,16 +18,18 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
-    public Products getProductsByBrand(final String brand) throws WebserviceException{
-        Products products;
+    
+    public Rebates getRebates(final Products products) throws WebserviceException{
+        Rebates rebates;
         try {
-            products = webservice.getProducts(brand);
+            rebates = webservice.getRebates(products);
         } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice");
+            throw new WebserviceException("failed invoking the webservice", e);
         }
-        ifNullThrowError(products);
-        return products;
+        ifNullThrowError(rebates);
+        return rebates;
     }
+    
     private void ifNullThrowError(Object object) throws WebserviceException {
        if (object==null)
            throw new WebserviceException("The webservice returned null");
