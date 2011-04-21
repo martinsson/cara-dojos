@@ -6,6 +6,11 @@ import code.puzzles.TheRestOfTheCode.WebserviceException;
 
 public class WebserviceHelper {
     private Webservice webservice;
+    
+    public WebserviceHelper(Webservice webservice) {
+        this.webservice = webservice;
+    }
+    
     public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
@@ -16,6 +21,7 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
+    
     public Products getProductsByBrand(final String brand) throws WebserviceException{
         Products products;
         try {
@@ -26,6 +32,7 @@ public class WebserviceHelper {
         ifNullThrowError(products);
         return products;
     }
+    
     private void ifNullThrowError(Object object) throws WebserviceException {
        if (object==null)
            throw new WebserviceException("The webservice returned null");
