@@ -9,6 +9,10 @@ public class TheRestOfTheCode {
         public Products getProducts(String brand) {
             return new Products();
         }
+        public Rebates getRebates(Products products) {
+            return new Rebates();
+        }
+
     }
     static class Products {
     }

@@ -1,35 +1,46 @@
 package code.puzzles;
 
 import code.puzzles.TheRestOfTheCode.Products;
+import code.puzzles.TheRestOfTheCode.Rebates;
 import code.puzzles.TheRestOfTheCode.Webservice;
 import code.puzzles.TheRestOfTheCode.WebserviceException;
 
 public class WebserviceHelper {
     private Webservice webservice;
     public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
-        Products products;
-        try {
-            products = webservice.getProducts(category, quantity);
-        } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice", e);
-        }
-        ifNullThrowError(products);
-        return products;
+        ProductsRetriever retriever = categoryBasedProductRetriever(category, quantity);
+        return retriever.getProductsSafely();
     }
-    public Products getProductsByBrand(final String brand) throws WebserviceException{
-        Products products;
-        try {
-            products = webservice.getProducts(brand);
-        } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice");
-        }
-        ifNullThrowError(products);
-        return products;
-    }
-    private void ifNullThrowError(Object object) throws WebserviceException {
-       if (object==null)
-           throw new WebserviceException("The webservice returned null");
-    }
-    
 
+    public Products getProductsByBrand(final String brand) throws WebserviceException{
+        ProductsRetriever retriever = brandBasedCategoryRetriever(brand);
+        return retriever.getProductsSafely();
+    }
+    public Rebates getRebates(final Products products) throws WebserviceException{
+        Rebates rebates;
+        try {
+            rebates = webservice.getRebates(products);
+        } catch(RuntimeException e) {
+            throw new WebserviceException("failed to get rebates for " + products,  e);
+        }
+        ProductsRetriever.ifNullThrowError(rebates);
+        return rebates;
+    }
+
+
+    
+    private ProductsRetriever brandBasedCategoryRetriever(final String brand) {
+        return new ProductsRetriever() {
+            public Products getProducts() {
+                return webservice.getProducts(brand);
+            }
+        };
+    }
+    private ProductsRetriever categoryBasedProductRetriever(final Integer category, final Integer quantity) {
+        return new ProductsRetriever() {
+            public Products getProducts() {
+                return webservice.getProducts(category, quantity);
+            }
+        };
+    }
 }
