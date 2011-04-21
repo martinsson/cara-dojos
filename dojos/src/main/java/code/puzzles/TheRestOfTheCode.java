@@ -18,10 +18,12 @@ public class TheRestOfTheCode {
     @SuppressWarnings("serial")
     public static class WebserviceException extends Exception {
 
-        public WebserviceException(String string, RuntimeException e) {
+        public WebserviceException(String message, Throwable cause) {
+        	super(message, cause);
         }
 
-        public WebserviceException(String string) {
+        public WebserviceException(String message) {
+        	super(message);
         }
 
     }
