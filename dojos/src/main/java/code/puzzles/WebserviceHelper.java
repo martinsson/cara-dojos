@@ -12,20 +12,21 @@ public class WebserviceHelper {
     }
     
     public Products getProductsByCategoryAndQuantity(final Integer category, final Integer quantity) throws WebserviceException{
-        Products products;
-        try {
-            products = webservice.getProducts(category, quantity);
-        } catch(RuntimeException e) {
-            throw new WebserviceException("failed invoking the webservice");
-        }
-        ifNullThrowError(products);
-        return products;
+        return getProductsGeneric(null, category, quantity);
     }
     
     public Products getProductsByBrand(final String brand) throws WebserviceException{
+        return getProductsGeneric(brand, null, null);
+    }
+    
+    public Products getProductsGeneric(final String brand, final Integer category, final Integer quantity) throws WebserviceException{
         Products products;
         try {
-            products = webservice.getProducts(brand);
+            if (brand == null) {
+                products = webservice.getProducts(category, quantity);
+            } else {
+                products = webservice.getProducts(brand);
+            }
         } catch(RuntimeException e) {
             throw new WebserviceException("failed invoking the webservice");
         }
