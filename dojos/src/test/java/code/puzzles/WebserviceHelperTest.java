@@ -1,6 +1,5 @@
 package code.puzzles;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -12,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import code.puzzles.TheRestOfTheCode.Products;
+import code.puzzles.TheRestOfTheCode.Rebates;
 import code.puzzles.TheRestOfTheCode.Webservice;
 import code.puzzles.TheRestOfTheCode.WebserviceException;
 
@@ -66,41 +66,41 @@ public class WebserviceHelperTest {
     }
 	
 	@Test public void 
-	getProductsByCategoryAndQuantity_returns_a_product() throws WebserviceException {
-        when(webservice.getProducts(category, quantity)).thenReturn(new Products());
-	    
-	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
-	    Products productsByBrand = webserviceHelper.getProductsByCategoryAndQuantity(category, quantity);
-	    assertNotNull(productsByBrand);
-	}
+    	getRebates_returns_a_product() throws WebserviceException {
+            when(webservice.getRebates(category, quantity)).thenReturn(new Rebates());
+    	    
+    	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
+    	    Rebates rebates = webserviceHelper.getRebates(category, quantity);
+    	    assertNotNull(rebates);
+    	}
 	
 	
 	@Test public void 
-	getProductsByCategoryAndQuantity_protects_from_nulls_by_throwing_exception() {
-	    when(webservice.getProducts(category, quantity)).thenReturn(null);
-	    
-	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
-	    try {
-	        webserviceHelper.getProductsByCategoryAndQuantity(category, quantity);
-	        fail("Expected an exception to have been thrown.");
-	    } catch (WebserviceException e) {
-	        assertEquals("Unexpected exception message", "The webservice returned null", e.getMessage());
-	    }
-	}
+    	getRebates_protects_from_nulls_by_throwing_exception() {
+    	    when(webservice.getRebates(category, quantity)).thenReturn(null);
+    	    
+    	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
+    	    try {
+    	        webserviceHelper.getRebates(category, quantity);
+    	        fail("Expected an exception to have been thrown.");
+    	    } catch (WebserviceException e) {
+    	        assertEquals("Unexpected exception message", "The webservice returned null", e.getMessage());
+    	    }
+    	}
 	
 	@Test public void 
-	getProductsByCategoryAndQuantity_transforms_RuntimeExceptions_to_WebserviceExceptions() throws Exception  {
-	    when(webservice.getProducts(category, quantity)).thenThrow(new RuntimeException());
-	    
-	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
-	    try {
-	        webserviceHelper.getProductsByCategoryAndQuantity(category, quantity);
-	        fail("Expected an exception to have been thrown.");
-	    } catch (WebserviceException e) {
-	        assertEquals("Unexpected exception message", "failed invoking the webservice", e.getMessage());
-	    }
-	    
-	}
+    	getRebates_transforms_RuntimeExceptions_to_WebserviceExceptions() throws Exception  {
+    	    when(webservice.getRebates(category, quantity)).thenThrow(new RuntimeException());
+    	    
+    	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
+    	    try {
+    	        webserviceHelper.getRebates(category, quantity);
+    	        fail("Expected an exception to have been thrown.");
+    	    } catch (WebserviceException e) {
+    	        assertEquals("Unexpected exception message", "failed invoking the webservice", e.getMessage());
+    	    }
+    	    
+    	}
 	
 }
 

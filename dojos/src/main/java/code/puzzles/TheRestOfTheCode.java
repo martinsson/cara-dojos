@@ -3,8 +3,8 @@ package code.puzzles;
 
 public class TheRestOfTheCode {
     static class Webservice {
-        public Products getProducts(Integer category, Integer quantity) {
-            return new Products();
+        public Rebates getRebates(Integer category, Integer quantity) {
+            return new Rebates();
         }
         public Products getProducts(String brand) {
             return new Products();
