@@ -60,7 +60,7 @@ public class WebserviceHelperTest {
 	        webserviceHelper.getProductsByBrand("Apple");
 	        fail("Expected an exception to have been thrown.");
 	    } catch (WebserviceException e) {
-	        assertEquals("Unexpected exception message", "failed invoking the webservice", e.getMessage());
+	        assertEquals("Unexpected exception message", "failed invoking the webservice for brand: " + "Apple", e.getMessage());
 	    }
          
     }
@@ -90,14 +90,16 @@ public class WebserviceHelperTest {
 	
 	@Test public void 
 	getProductsByCategoryAndQuantity_transforms_RuntimeExceptions_to_WebserviceExceptions() throws Exception  {
-	    when(webservice.getProducts(category, quantity)).thenThrow(new RuntimeException());
+	    RuntimeException runtimeException = new RuntimeException();
+        when(webservice.getProducts(category, quantity)).thenThrow(runtimeException );
 	    
 	    WebserviceHelper webserviceHelper = new WebserviceHelper(webservice);
 	    try {
 	        webserviceHelper.getProductsByCategoryAndQuantity(category, quantity);
 	        fail("Expected an exception to have been thrown.");
 	    } catch (WebserviceException e) {
-	        assertEquals("Unexpected exception message", "failed invoking the webservice", e.getMessage());
+	        assertEquals("Unexpected exception message", "failed invoking the webservice with arguments category: 123 and quantity: 100", e.getMessage());
+	        assertEquals(runtimeException, e.getCause());
 	    }
 	    
 	}
