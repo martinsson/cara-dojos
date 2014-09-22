@@ -22,6 +22,12 @@ public class RomanNumeralsTest {
 		checkConversionOf(12, "XII");
 		checkConversionOf(13, "XIII");
 		checkConversionOf(14, "XIV");
+		checkConversionOf(15, "XV");
+		checkConversionOf(16, "XVI");
+		checkConversionOf(17, "XVII");
+		checkConversionOf(18, "XVIII");
+		checkConversionOf(19, "XIX");
+		checkConversionOf(20, "XX");
 	}
 
 
