@@ -15,6 +15,7 @@ public class RomanNumeralsTest {
 		checkConversionOf(5, "V");
 		checkConversionOf(6, "VI");
 		checkConversionOf(7, "VII");
+		checkConversionOf(8, "VIII");
 	}
 
 
