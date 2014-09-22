@@ -13,6 +13,8 @@ public class RomanNumeralsTest {
 		checkConversionOf(3, "III");
 		checkConversionOf(4, "IV");
 		checkConversionOf(5, "V");
+		checkConversionOf(6, "VI");
+		checkConversionOf(7, "VII");
 	}
 
 
