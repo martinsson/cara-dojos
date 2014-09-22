@@ -5,11 +5,20 @@ import org.junit.Test;
 
 public class RomanNumeralsTest {
 
+	RomanNumerals romans = new RomanNumerals();
 	@Test
 	public void One_evaluates_to_I() {
-		RomanNumerals romans = new RomanNumerals();
-		String result = romans.convert(1);
-		Assertions.assertThat(result).isEqualTo("I");
+		checkConversionOf(1, "I");
+		checkConversionOf(2, "II");
+		checkConversionOf(3, "III");
+		checkConversionOf(4, "IV");
+		checkConversionOf(5, "V");
 	}
 
+
+	protected void checkConversionOf(int arabicNumber, String expectedRomanNumber) {
+		String result = romans.convert(arabicNumber);
+		Assertions.assertThat(result).isEqualTo(expectedRomanNumber);
+	}
+	
 }
