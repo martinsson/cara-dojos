@@ -32,6 +32,9 @@ public class RomanNumeralsTest {
 		checkConversionOf(40, "XL");
 		checkConversionOf(49, "XLIX");
 		checkConversionOf(50, "L");
+		checkConversionOf(90, "XC");
+		checkConversionOf(100, "C");
+		checkConversionOf(199, "CXCIX");
 	}
 
 
