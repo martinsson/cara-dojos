@@ -16,6 +16,12 @@ public class RomanNumeralsTest {
 		checkConversionOf(6, "VI");
 		checkConversionOf(7, "VII");
 		checkConversionOf(8, "VIII");
+		checkConversionOf(9, "IX");
+		checkConversionOf(10, "X");
+		checkConversionOf(11, "XI");
+		checkConversionOf(12, "XII");
+		checkConversionOf(13, "XIII");
+		checkConversionOf(14, "XIV");
 	}
 
 

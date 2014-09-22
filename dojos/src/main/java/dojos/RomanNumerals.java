@@ -3,15 +3,19 @@ package dojos;
 public class RomanNumerals {
 
 	public String convert(int number) {
-		if (number >= 5 && number <= 8)
+		if (number >= 10 )
+			return "X" + convert(number -10);
+		else if (number == 9)
+			return "IX";
+		else if (number >= 5)
 			return "V" + convert(number -5);
-		if (number == 4)
+		else if (number == 4)
 			return "IV";
-		if (number == 3)
+		else if (number == 3)
 			return "III";
-		if (number == 2)
+		else if (number == 2)
 			return "II";
-		if (number == 1)
+		else if (number == 1)
 			return "I";
 		else return "";
 		
