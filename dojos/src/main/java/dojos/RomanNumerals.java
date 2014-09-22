@@ -3,6 +3,10 @@ package dojos;
 public class RomanNumerals {
 
 	public String convert(int number) {
+		if (number >= 50 )
+			return "L" + convert(number -50);
+		if (number >= 40 )
+			return "XL" + convert(number -40);
 		if (number >= 10 )
 			return "X" + convert(number -10);
 		else if (number == 9)

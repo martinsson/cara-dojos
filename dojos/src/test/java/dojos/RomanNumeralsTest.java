@@ -28,6 +28,10 @@ public class RomanNumeralsTest {
 		checkConversionOf(18, "XVIII");
 		checkConversionOf(19, "XIX");
 		checkConversionOf(20, "XX");
+		checkConversionOf(38, "XXXVIII");
+		checkConversionOf(40, "XL");
+		checkConversionOf(49, "XLIX");
+		checkConversionOf(50, "L");
 	}
 
 
